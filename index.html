@@ -1,25 +1,317 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Primera Página</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
-    header { background: #333; color: white; padding: 20px; }
-    section { margin: 20px; }
-    footer { background: #333; color: white; padding: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excursiones Mauricio - Isla Mauricio / Mauritius Tours</title>
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #ff6f00;
+            --dark: #263238;
+            --light: #f4f6f7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            background-color: #fafafa;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .lang-switch button {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .lang-switch button.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.3rem; }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content { padding: 20px; }
+        .card-title { font-size: 1.3rem; margin-top: 0; color: var(--primary); }
+
+        .btn-booking {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* Panel de edición e incorporación de contenido */
+        .admin-panel {
+            background-color: #e0f7fa;
+            border: 2px dashed var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .admin-panel input, .admin-panel textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Bienvenido a mi página</h1>
-  </header>
-  <section>
-    <p>Hola, soy Fabio y esta es mi primera web creada con ayuda de IA.</p>
-    <p>Aquí puedo mostrar mis servicios, fotos o proyectos.</p>
-  </section>
-  <footer>
-    <p>© 2026 Mi Página Web</p>
-  </footer>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">Mauritius Paradise Tours</div>
+            <div class="lang-switch">
+                <button onclick="changeLang('es')" id="btn-es" class="active">ES</button>
+                <button onclick="changeLang('en')" id="btn-en">EN</button>
+                <button onclick="changeLang('fr')" id="btn-fr">FR</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 id="hero-title">Descubre Isla Mauricio en Español</h1>
+        <p id="hero-subtitle">Excursiones exclusivas, cultura, playas turquesa y paisajes del sur salvaje.</p>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title" id="tours-title">Nuestras Excursiones Principales</h2>
+        
+        <div class="grid" id="tours-grid">
+            <!-- Costa Sur -->
+            <div class="card">
+                <img src="gris_gris.jpg" alt="Costa Sur - Gris Gris" onerror="this.src='https://via.placeholder.com/400x200?text=Acantilados+Gris+Gris'">
+                <div class="card-content">
+                    <h3 class="card-title" data-key="tour1-title">Ruta del Sur Salvaje y Gris Gris</h3>
+                    <p data-key="tour1-desc">Explora el oleaje atlántico en los acantilados de Gris Gris y la costa sur sin arrecifes.</p>
+                    <a href="https://wa.me/23000000000?text=Hola,%20busco%20información%20sobre%20el%20Tour%20del%20Sur" class="btn-booking" data-key="btn-book">Reservar por WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div class="card">
+                <img src="catamaran_coin_de_mire.jpg" alt="Excursión en Catamarán" onerror="this.src='https://via.placeholder.com/400x200?text=Navegacion+Norte'">
+                <div class="card-content">
+                    <h3 class="card-title" data-key="tour2-title">Paseo en Barco hacia Coin de Mire</h3>
+                    <p data-key="tour2-desc">Navegación en catamarán por las islas del norte con vistas a Coin de Mire.</p>
+                    <a href="https://wa.me/23000000000?text=Hola,%20busco%20información%20sobre%20el%20Tour%20en%20Barco" class="btn-booking" data-key="btn-book">Reservar por WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Cultura -->
+            <div class="card">
+                <img src="templo_tamil.jpg" alt="Templo Tamil" onerror="this.src='https://via.placeholder.com/400x200?text=Cultura+y+Templos'">
+                <div class="card-content">
+                    <h3 class="card-title" data-key="tour3-title">Ruta Cultural e Historia Mauricio</h3>
+                    <p data-key="tour3-desc">Visita a los coloridos templos Tamil y centros culturales de la isla con guía en español.</p>
+                    <a href="https://wa.me/23000000000?text=Hola,%20busco%20información%20sobre%20el%20Tour%20Cultural" class="btn-booking" data-key="btn-book">Reservar por WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Naturaleza y Botánica -->
+            <div class="card">
+                <img src="pamplemousses_jardin.jpg" alt="Jardín Botánico Pamplemousses" onerror="this.src='https://via.placeholder.com/400x200?text=Jardin+Pamplemousses'">
+                <div class="card-content">
+                    <h3 class="card-title" data-key="tour4-title">Jardín Botánico y Nenúfares Gigantes</h3>
+                    <p data-key="tour4-desc">Recorre el estanque histórico de la Victoria Amazonica y la flora tropical de la isla.</p>
+                    <a href="https://wa.me/23000000000?text=Hola,%20busco%20información%20sobre%20el%20Tour%20Botánico" class="btn-booking" data-key="btn-book">Reservar por WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opción de Edición Directa -->
+        <div class="admin-panel">
+            <h3>⚙️ Añadir Nueva Excursión (Panel de Edición)</h3>
+            <p>Escribe los detalles aquí para agregar contenido en tiempo real a la página:</p>
+            <input type="text" id="new-title" placeholder="Título de la Excursión">
+            <input type="text" id="new-img" placeholder="Ruta o URL de la imagen (ej: mi_foto.jpg)">
+            <textarea id="new-desc" placeholder="Descripción breve de la actividad"></textarea>
+            <button onclick="addTour()" style="background:var(--primary); color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:4px; font-weight:bold;">Añadir Excursión</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Mauritius Paradise Tours - Servicio Guiado Especializado en Español</p>
+    </footer>
+
+    <script>
+        const translations = {
+            es: {
+                heroTitle: "Descubre Isla Mauricio en Español",
+                heroSub: "Excursiones exclusivas, cultura, playas turquesa y paisajes del sur salvaje.",
+                toursTitle: "Nuestras Excursiones Principales",
+                btnBook: "Reservar por WhatsApp",
+                "tour1-title": "Ruta del Sur Salvaje y Gris Gris",
+                "tour1-desc": "Explora el oleaje atlántico en los acantilados de Gris Gris y la costa sur sin arrecifes.",
+                "tour2-title": "Paseo en Barco hacia Coin de Mire",
+                "tour2-desc": "Navegación en catamarán por las islas del norte con vistas a Coin de Mire.",
+                "tour3-title": "Ruta Cultural e Historia Mauricio",
+                "tour3-desc": "Visita a los coloridos templos Tamil y centros culturales de la isla con guía en español.",
+                "tour4-title": "Jardín Botánico y Nenúfares Gigantes",
+                "tour4-desc": "Recorre el estanque histórico de la Victoria Amazonica y la flora tropical de la isla."
+            },
+            en: {
+                heroTitle: "Discover Mauritius Island",
+                heroSub: "Exclusive tours, culture, turquoise beaches, and wild southern landscapes.",
+                toursTitle: "Our Main Excursions",
+                btnBook: "Book via WhatsApp",
+                "tour1-title": "Wild South & Gris Gris Route",
+                "tour1-desc": "Explore the open ocean waves at Gris Gris cliffs and the reef-less southern coast.",
+                "tour2-title": "Catamaran Cruise to Coin de Mire",
+                "tour2-desc": "Sailing through northern islands with breathtaking views of Coin de Mire.",
+                "tour3-title": "Mauritius Cultural & Heritage Tour",
+                "tour3-desc": "Visit colorful Tamil temples and island heritage spots with private guidance.",
+                "tour4-title": "Botanical Garden & Giant Water Lilies",
+                "tour4-desc": "Discover the historic Victoria Amazonica lily pond and lush tropical flora."
+            },
+            fr: {
+                heroTitle: "Découvrez l'Île Maurice",
+                heroSub: "Excursions exclusives, culture, plages turquoises et paysages du sud sauvage.",
+                toursTitle: "Nos Principales Excursions",
+                btnBook: "Réserver via WhatsApp",
+                "tour1-title": "Route du Sud Sauvage et Gris Gris",
+                "tour1-desc": "Explorez les vagues de l'océan aux falaises de Gris Gris et la côte sud.",
+                "tour2-title": "Croisière en Catamaran vers Coin de Mire",
+                "tour2-desc": "Navigation vers les îles du nord avec vue sur l'emblématique Coin de Mire.",
+                "tour3-title": "Circuit Culturel et Patrimoine",
+                "tour3-desc": "Visite des temples Tamouls colorés et des sites culturels de l'île.",
+                "tour4-title": "Jardin Botanique et Nénuphars Géants",
+                "tour4-desc": "Parcourez le bassin historique des Victoria Amazonica et la flore tropicale."
+            }
+        };
+
+        function changeLang(lang) {
+            document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+
+            document.getElementById('hero-title').innerText = translations[lang].heroTitle;
+            document.getElementById('hero-subtitle').innerText = translations[lang].heroSub;
+            document.getElementById('tours-title').innerText = translations[lang].toursTitle;
+
+            document.querySelectorAll('.btn-booking').forEach(b => b.innerText = translations[lang].btnBook);
+
+            for (let key in translations[lang]) {
+                let el = document.querySelector(`[data-key="${key}"]`);
+                if (el) el.innerText = translations[lang][key];
+            }
+        }
+
+        function addTour() {
+            const title = document.getElementById('new-title').value;
+            const img = document.getElementById('new-img').value || 'https://via.placeholder.com/400x200';
+            const desc = document.getElementById('new-desc').value;
+
+            if (!title || !desc) {
+                alert('Por favor completa el título y la descripción');
+                return;
+            }
+
+            const grid = document.getElementById('tours-grid');
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${img}" alt="${title}">
+                <div class="card-content">
+                    <h3 class="card-title">${title}</h3>
+                    <p>${desc}</p>
+                    <a href="https://wa.me/23000000000" class="btn-booking">Reservar por WhatsApp</a>
+                </div>
+            `;
+            grid.appendChild(card);
+
+            document.getElementById('new-title').value = '';
+            document.getElementById('new-img').value = '';
+            document.getElementById('new-desc').value = '';
+        }
+    </script>
 </body>
 </html>
